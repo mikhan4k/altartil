@@ -1,9 +1,10 @@
-
 export enum PlanMode {
   DAYS = 'DAYS',
   END_DATE = 'END_DATE',
   PACE = 'PACE'
 }
+
+export type Theme = 'dark' | 'light';
 
 export interface DaySchedule {
   dayNumber: number;
@@ -26,4 +27,5 @@ export interface UserSettings {
 export interface PlannerState {
   settings: UserSettings;
   progress: Record<number, boolean>; // dayNumber -> completed status
+  theme: Theme;
 }
