@@ -62,13 +62,10 @@ const App: React.FC = () => {
   const projections = useMemo(() => {
     const remaining = TOTAL_PAGES - totalPagesRead;
     
-    // Planned completion is the end of the current generated schedule
     const plannedFinishDate = schedule.length > 0 
       ? schedule[schedule.length - 1].date 
       : 'N/A';
 
-    // "Expected" is specifically calculated from the current dailyGoal, 
-    // regardless of whether the schedule is currently driven by it.
     const daysToFinishExpected = state.settings.dailyGoal > 0 
       ? Math.ceil(remaining / state.settings.dailyGoal) 
       : 0;
@@ -235,15 +232,6 @@ const App: React.FC = () => {
               </div>
             )}
 
-            {state.settings.planMode === PlanMode.PACE && (
-              <div className="space-y-2 flex flex-col justify-end">
-                <div className="bg-slate-800/50 p-3 rounded-lg border border-amber-900/20">
-                  <p className="text-[10px] text-amber-200/40 uppercase font-bold">Automatic Schedule</p>
-                  <p className="text-xs text-amber-500 mt-1">Generating a reading plan day-by-day until all 604 pages are covered at your pace.</p>
-                </div>
-              </div>
-            )}
-
             <div className="flex items-end md:col-span-2">
               <button 
                 onClick={resetProgress}
@@ -279,7 +267,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="text-center md:text-left">
-              <p className="text-xs text-amber-200/40 uppercase mb-1">Pace Difference</p>
+              <p className="text-xs text-amber-200/40 uppercase mb-1">Status</p>
               <p className="text-xl font-bold text-amber-200">
                 {state.settings.dailyGoal > 0 ? `${projections.daysToFinishExpected} Days` : 'N/A'}
               </p>
@@ -315,12 +303,6 @@ const App: React.FC = () => {
                 <span className="w-8 h-8 rounded-full bg-amber-900/30 flex items-center justify-center text-sm font-sans">3</span>
                 Generated Reading Schedule
             </h2>
-            <div className="flex flex-col items-end">
-                <span className="text-[10px] text-amber-200/40 uppercase tracking-widest font-bold">Current Pace</span>
-                <span className="text-xs text-amber-500">
-                    {state.settings.planMode === PlanMode.PACE ? `${state.settings.dailyGoal} pages/day` : 'Calculated automatically'}
-                </span>
-            </div>
           </div>
           
           {schedule.length > 0 ? (
